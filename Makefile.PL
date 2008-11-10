@@ -16,7 +16,7 @@ WriteMakefile(
     VERSION_FROM  => 'lib/Mojo/Server/FCGI.pm',
     AUTHOR        => 'Sebastian Riedel <sri@cpan.org>',
     LICENSE       => 'perl',
-    PREREQ_PM     => { 'FCGI' => '0.67', 'Mojo' => '0.8008' },
+    PREREQ_PM     => { 'FCGI' => '0.67', 'Mojo' => '0.8009' },
     test          => {
         TESTS => 't/*.t t/*/*.t t/*/*/*.t'
     }

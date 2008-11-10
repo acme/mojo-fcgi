@@ -1,4 +1,7 @@
 This file documents the revision history for Perl extension Mojo::Server::FCGI.
 
+0.02    2008-11-10 00:00:00
+        - Fixed servers according to the spec.
+
 0.01    2008-11-07 00:00:00
         - First release.

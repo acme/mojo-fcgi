@@ -10,7 +10,7 @@ use bytes;
 
 use FCGI;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 # Wow! Homer must have got one of those robot cars!
 # *Car crashes in background*
@@ -36,29 +36,13 @@ sub process {
 
     my $res = $tx->res;
 
-    # Response start line
-    my $offset = 0;
-    while (1) {
-        my $chunk = $res->get_start_line_chunk($offset);
-
-        # No start line yet, try again
-        unless (defined $chunk) {
-            sleep 1;
-            next;
-        }
-
-        # End of start line
-        last unless length $chunk;
-
-        # Start line
-        STDOUT->syswrite($chunk);
-        $offset += length $chunk;
-    }
-
-    # Response headers
+    # Status
     my $code = $res->code;
     my $message = $res->message || $res->default_message;
-    $offset = 0;
+    $res->headers->status("$code $message") unless $res->headers->status;
+
+    # Response headers
+    my $offset = 0;
     while (1) {
         my $chunk = $res->get_header_chunk($offset);
 
