@@ -26,8 +26,7 @@ use_ok('Mojo::Server::FCGI');
 my $server = Test::Mojo::Server->new;
 my $port   = $server->generate_port_ok;
 my $script = $server->home->executable;
-#my $dir    = File::Temp::tempdir();
-my $dir = '/home/acme/git/mojo-fcgi/apache';
+my $dir    = File::Temp::tempdir();
 my $config = File::Spec->catfile($dir, 'apache.conf');
 my $mt     = Mojo::Template->new;
 
