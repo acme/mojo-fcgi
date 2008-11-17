@@ -12,6 +12,7 @@ use FindBin;
 # Dist
 use lib "$FindBin::Bin/lib";
 use lib "$FindBin::Bin/../lib";
+use lib "$FindBin::Bin/../t/lib";
 use lib "$FindBin::Bin/../../lib";
 
 # App
@@ -32,4 +33,5 @@ EOF
 my $scripts = Mojo::Scripts->new;
 
 # Default for Apache
-$scripts->run(@ARGV || 'fcgi');
+$ARGV[0] ||= 'fcgi';
+$scripts->run(@ARGV);
