@@ -26,8 +26,7 @@ use_ok('Mojo::Server::FCGI');
 my $server = Test::Mojo::Server->new;
 my $port   = $server->generate_port_ok;
 my $script = $server->home->executable;
-#my $dir    = File::Temp::tempdir();
-my $dir = '/home/acme/git/mojo-fcgi/apache';
+my $dir    = File::Temp::tempdir();
 my $config = File::Spec->catfile($dir, 'apache.conf');
 my $mt     = Mojo::Template->new;
 
@@ -36,13 +35,13 @@ $mt->render_to_file(<<'EOF', $config, $dir, $port, $script);
 % use File::Spec::Functions 'catfile'
 ServerName 127.0.0.1
 Listen <%= $port %>
+
+LoadModule log_config_module libexec/apache2/mod_log_config.so
+
 ErrorLog <%= catfile $dir, 'error.log' %>
 
-LogFormat "%h %l %u %t \"%r\" %>s %b" common
-CustomLog <%= catfile $dir, 'access.log' %> common
-
-LoadModule alias_module /usr/lib/apache2/modules/mod_alias.so
-LoadModule fastcgi_module /usr/lib/apache2/modules/mod_fastcgi.so
+LoadModule alias_module libexec/apache2/mod_alias.so
+LoadModule fastcgi_module libexec/apache2/mod_fastcgi.so
 
 PidFile <%= catfile $dir, 'httpd.pid' %>
 LockFile <%= catfile $dir, 'accept.lock' %>
@@ -56,7 +55,7 @@ Alias / <%= $script %>/
 EOF
 
 # Start
-$server->command("/usr/sbin/apache2 -X -f $config");
+$server->command("/usr/sbin/httpd -X -f $config");
 $server->start_server_ok;
 
 # Request
