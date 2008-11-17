@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/home/acme/bin/perl
 
 # Copyright (C) 2008, Sebastian Riedel.
 
@@ -30,4 +30,4 @@ EOF
 
 # Start the script system
 my $scripts = Mojo::Scripts->new;
-$scripts->run(@ARGV);
+$scripts->run(@ARGV || 'fcgi');
