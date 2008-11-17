@@ -12,6 +12,8 @@ use FindBin;
 # Dist
 use lib "$FindBin::Bin/lib";
 use lib "$FindBin::Bin/../lib";
+use lib "$FindBin::Bin/../t";
+use lib "$FindBin::Bin/../../lib";
 use lib "$FindBin::Bin/../../lib";
 
 # App
