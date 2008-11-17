@@ -1,4 +1,4 @@
-#!/home/acme/bin/perl
+#!/usr/bin/perl
 
 # Copyright (C) 2008, Sebastian Riedel.
 
@@ -12,8 +12,7 @@ use FindBin;
 # Dist
 use lib "$FindBin::Bin/lib";
 use lib "$FindBin::Bin/../lib";
-use lib "$FindBin::Bin/../t";
-use lib "$FindBin::Bin/../../lib";
+use lib "$FindBin::Bin/../t/lib";
 use lib "$FindBin::Bin/../../lib";
 
 # App
@@ -32,4 +31,7 @@ EOF
 
 # Start the script system
 my $scripts = Mojo::Scripts->new;
-$scripts->run(@ARGV || 'fcgi');
+
+# Default for Apache
+$ARGV[0] ||= 'fcgi';
+$scripts->run(@ARGV);

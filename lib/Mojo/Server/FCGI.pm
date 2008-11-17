@@ -10,7 +10,7 @@ use bytes;
 
 use FCGI;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 # Wow! Homer must have got one of those robot cars!
 # *Car crashes in background*
@@ -25,10 +25,10 @@ sub process {
     $req->parse(\%ENV);
 
     # Request body
-    $req->state('body');
     while (!$req->is_state(qw/done error/)) {
-        last unless (my $read = STDIN->sysread(my $buffer, 4096, 0)) >= 0;
+        my $read = STDIN->sysread(my $buffer, 4096, 0);
         $req->parse($buffer);
+        last if $read <= 0;
     }
 
     # Handle
@@ -78,8 +78,6 @@ sub process {
         STDOUT->syswrite($chunk);
         $offset += length $chunk;
     }
-
-    return $res->code;
 }
 
 sub run {
